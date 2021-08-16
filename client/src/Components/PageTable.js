@@ -59,33 +59,28 @@ export default function PageTable() {
   }, [operation, value, col, data]);
 
   const sortHandler = (event) => {
-    setFilteredData((prev) => (prev = data.slice()));
+    setFilteredData(data.slice());
     const col = event.target.textContent;
     switch (col) {
       case "name":
         return setFilteredData(
-          (prev) =>
-            (prev = filteredData
-              .sort((a, b) => (a[col] > b[col] ? 1 : -1))
-              .slice())
+          filteredData.sort((a, b) => (a[col] > b[col] ? 1 : -1)).slice()
         );
       case "date":
         return setFilteredData(
-          (prev) =>
-            (prev = filteredData
-              .sort((a, b) => {
-                const [aDay, aMonth, aYear] = a.date.split(".");
-                const [bDay, bMonth, bYear] = b.date.split(".");
-                return (
-                  new Date(aYear, aMonth, aDay) - new Date(bYear, bMonth, bDay)
-                );
-              })
-              .slice())
+          filteredData
+            .sort((a, b) => {
+              const [aDay, aMonth, aYear] = a.date.split(".");
+              const [bDay, bMonth, bYear] = b.date.split(".");
+              return (
+                new Date(aYear, aMonth, aDay) - new Date(bYear, bMonth, bDay)
+              );
+            })
+            .slice()
         );
       default:
         return setFilteredData(
-          (prev) =>
-            (prev = filteredData.sort((a, b) => a[col] - b[col]).slice())
+          filteredData.sort((a, b) => a[col] - b[col]).slice()
         );
     }
   };
