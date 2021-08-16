@@ -25,17 +25,17 @@ export default function PageTable() {
       });
   }, []);
 
-  const paginate = (event) => {
-    setCurrentPage(event.target.textContent);
-  };
   const operationHandler = (event) => {
-    setOperation((prev) => (prev = event.target.value));
+    setCurrentPage(1);
+    setOperation(event.target.value);
   };
   const colHandler = (event) => {
-    setCol((prev) => (prev = event.target.value));
+    setCurrentPage(1);
+    setCol(event.target.value);
   };
   const valueHandler = (event) => {
-    setValue((prev) => (prev = event.target.value));
+    setCurrentPage(1);
+    setValue(event.target.value);
   };
   useEffect(() => {
     if (!value) return setFilteredData(data);
@@ -108,7 +108,11 @@ export default function PageTable() {
       ) : (
         <h1>Loading...</h1>
       )}
-      <Pagination paginate={paginate} pages={pages} currentPage={currentPage} />
+      <Pagination
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        pages={pages}
+      />
     </div>
   );
 }

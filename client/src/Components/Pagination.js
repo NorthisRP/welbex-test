@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Pagination({ paginate, pages, currentPage }) {
-  const getPaginator = (pages) => {
-    let buttonPages = [];
-    for (let i = 0; i < pages; i++) {
-      buttonPages.push(
+export default function Pagination({ pages, setCurrentPage, currentPage }) {
+  const maxButtons = 6;
+
+  const buttonPages = [];
+  for (let i = 0; i < pages; i++) {
+    buttonPages.push(i + 1);
+  }
+  const [currentButtons, setCurrentButtons] = useState(buttonPages);
+
+  useEffect(() => {
+    const dotsInitial = "...";
+    if (pages <= 10) return setCurrentButtons(buttonPages);
+
+    if (Number(currentPage) === 1)
+      setCurrentButtons([
+        ...buttonPages.slice(0, maxButtons),
+        dotsInitial,
+        pages,
+      ]);
+    else if (currentPage > 3 && Number(currentPage) + 3 < pages)
+      setCurrentButtons([
+        1,
+        dotsInitial,
+        ...buttonPages.slice(Number(currentPage) - 2, Number(currentPage) + 2),
+        dotsInitial,
+        pages,
+      ]);
+    else if (Number(currentPage) + 3 >= pages)
+      setCurrentButtons([1, dotsInitial, ...buttonPages.slice(-maxButtons)]);
+  }, [currentPage, pages]);
+
+  return (
+    <div style={{ display: "flex" }}>
+      {currentButtons.map((el, i) => (
         <div
           style={{
             padding: "1px",
@@ -17,14 +46,13 @@ export default function Pagination({ paginate, pages, currentPage }) {
             cursor: "pointer",
           }}
           key={i}
-          onClick={paginate}
+          onClick={(event) => {
+            setCurrentPage(event.target.textContent);
+          }}
         >
-          {i + 1}
+          {el}
         </div>
-      );
-    }
-    return buttonPages;
-  };
-
-  return <div style={{ display: "flex" }}>{getPaginator(pages)}</div>;
+      ))}
+    </div>
+  );
 }
