@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Page, Paginator } from "../styled";
 
 export default function Pagination({ pages, setCurrentPage, currentPage }) {
   const maxButtons = 6;
@@ -33,27 +34,17 @@ export default function Pagination({ pages, setCurrentPage, currentPage }) {
   }, [currentPage, pages]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <Paginator>
       {currentButtons.map((el, i) => (
-        <div
-          style={{
-            padding: "1px",
-            margin: "1px",
-            width: "30px",
-            height: "30px",
-            lineHeight: "30px",
-            textAlign: "center",
-            border: "1px solid black",
-            cursor: "pointer",
-          }}
+        <Page
           key={i}
           onClick={(event) => {
             setCurrentPage(event.target.textContent);
           }}
         >
           {el}
-        </div>
+        </Page>
       ))}
-    </div>
+    </Paginator>
   );
 }

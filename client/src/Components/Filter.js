@@ -1,4 +1,5 @@
 import React from "react";
+import { FilterContent, Select, Input } from "./../styled";
 
 export default function Filter({
   cols,
@@ -7,15 +8,15 @@ export default function Filter({
   operationHandler,
 }) {
   return (
-    <div style={{ display: "flex", margin: "20px 0" }}>
-      <select
+    <FilterContent>
+      <Select
         onChange={(event) => {
           colHandler(event);
         }}
       >
         {cols && cols.slice(2).map((col, i) => <option key={i}>{col}</option>)}
-      </select>
-      <select
+      </Select>
+      <Select
         onChange={(event) => {
           operationHandler(event);
         }}
@@ -24,12 +25,12 @@ export default function Filter({
         <option>Содержит</option>
         <option>Больше</option>
         <option>Меньше</option>
-      </select>
-      <input
+      </Select>
+      <Input
         onChange={(event) => {
           valueHandler(event);
         }}
       />
-    </div>
+    </FilterContent>
   );
 }

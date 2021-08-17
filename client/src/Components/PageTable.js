@@ -3,6 +3,7 @@ import axios from "axios";
 import DataTable from "./DataTable";
 import Pagination from "./Pagination";
 import Filter from "./Filter";
+import { Content } from "../styled";
 
 export default function PageTable() {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ export default function PageTable() {
   const [operation, setOperation] = useState("Равно");
   const [col, setCol] = useState("name");
   const [value, setValue] = useState("");
-  const objsPerPage = 25;
+  const objsPerPage = 20;
 
   useEffect(() => {
     axios
@@ -91,7 +92,7 @@ export default function PageTable() {
   const pages = Math.ceil(filteredData.length / objsPerPage);
 
   return (
-    <div>
+    <Content>
       <Filter
         cols={data[0] && Object.keys(data[0])}
         operationHandler={operationHandler}
@@ -113,6 +114,6 @@ export default function PageTable() {
         currentPage={currentPage}
         pages={pages}
       />
-    </div>
+    </Content>
   );
 }
