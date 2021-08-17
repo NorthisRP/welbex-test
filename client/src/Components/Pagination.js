@@ -39,7 +39,8 @@ export default function Pagination({ pages, setCurrentPage, currentPage }) {
         <Page
           key={i}
           onClick={(event) => {
-            setCurrentPage(event.target.textContent);
+            if (Number(event.target.textContent))
+              setCurrentPage(event.target.textContent);
           }}
         >
           {el}
